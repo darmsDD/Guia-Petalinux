@@ -69,11 +69,12 @@ do
 	cont=$((cont + 1))
 done
 
+is_a_number='^[0-9]+$' #regex para ver se a entrada é um número
 echo -e "\nAlguns dos arquivos encontrados está correto?"
 read -p "Digite 's' se sim: " input
 if [[ $input = "s" ]]; then
 	read -p "Digite o número do arquivo: " n_arquivo
-	while [[ n_arquivo -ge ${#caminhos[@]} || n_arquivo -lt 0 ]]
+	while [[ $n_arquivo -ge ${#caminhos[@]} || $n_arquivo -lt 0 ]] || ! [[ $n_arquivo =~ $is_a_number ]]
 	do 
 		read -p "Número inválido. Digite o número do arquivo: " n_arquivo
 	done 
