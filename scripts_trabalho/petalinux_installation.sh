@@ -120,7 +120,7 @@ repeat_reading "Digite o caminho onde será criada a pasta:"
 caminho_da_pasta=$caminho
 echo $caminho_da_pasta
 
-nova_pasta_para_instalador="$caminho_da_pasta/Petalinx_setup"
+nova_pasta_para_instalador="$caminho_da_pasta/Petalinux_setup"
 mkdir "$nova_pasta_para_instalador"
 
 #echo $caminho_do_instalador 
@@ -141,11 +141,11 @@ for package_name in  ${packages[@]};
 do
        	# Check if the package is installed
 	if [ $(is_package_installed $package_name) -eq 0 ]; then
-        	echo "$package_name is not installed."
-        	echo "Would you like to install $package_name?"
-        	read -p "Type 'y' for yes: " answer
+        	echo "$package_name não está instalado."
+        	echo "Gostaria de instalar $package_name?"
+        	read -p "Digite 's' para sim: " answer
 
-        	if [ $answer = "y" ]; then
+        	if [ $answer = "s" ]; then
                 sudo apt-get install "$package_name"
         	else
                 	echo -e "$package_name was not installed.\n"
@@ -162,7 +162,15 @@ stage_over
 echo "Etapa 5: Inicia a instalação do Petalinux"
 stage_init
 cd $nova_pasta_para_instalador
-"./$nome_instalador"
+petalinux_name=Petalinux
+mkdir $petalinux_name
+cd $petalinux_name &&  pwd  && cd .. #Entra na pasta ficará o Petalinux, mostra o nome para o usuario e retorna para a pasta anterior
+
+## Checa se o petalinux não está instalado na pasta. Se a pasta está vazia, então instala o petalinux
+if [ -n "$(find $petalinux_name -prune -empty)" ]; then #https://stackoverflow.com/questions/91368/checking-from-shell-script-if-a-directory-contains-files
+    "./$nome_instalador"
+fi
+
 
 
 
