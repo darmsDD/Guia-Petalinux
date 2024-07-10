@@ -21,4 +21,4 @@ Repositório com guias sobre o petalinux
 
 2. Execute o arquivo petalinux_installation.sh
 
-    ``` ./vivado_installation.sh ```
+    ``` ./petalinux_installation.sh ```
