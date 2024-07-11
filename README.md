@@ -22,3 +22,11 @@ Repositório com guias sobre o petalinux
 2. Execute o arquivo petalinux_installation.sh
 
     ```./petalinux_installation.sh ```
+
+3. Execute o arquivo petalinux_installation.sh
+
+    ```source ./init_petalinux.sh ```
+
+4. Execute o arquivo petalinux_installation.sh
+
+    ```./send_to_fpga.sh ```

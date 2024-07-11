@@ -38,10 +38,12 @@ green_word () {
 echo -e "${BLACK}Etapa 0: Verificando se o Petalinux está instalado"
 stage_init
 
+export initial_dir=$(pwd)
+
 caminho_parcial_pasta_petalinux="Petalinux_setup/Petalinux"
 nome_instalador_petalinux="petalinux_installation.sh"
 
-caminho_pasta_petalinux="$(find $HOME -type d -path "*/$caminho_parcial_pasta_petalinux")"
+export caminho_pasta_petalinux="$(find $HOME -type d -path "*/$caminho_parcial_pasta_petalinux")"
 if [ -z $caminho_pasta_petalinux ]; then
     while true
     do
@@ -80,6 +82,83 @@ if [ -z "$PETALINUX" ]; then
 fi
 echo $PETALINUX
 
+stage_over
+echo -e "${BLACK}Etapa 2: Criando um projeto"
+stage_init
+
+cd ..
+
+echo "Escolha uma das 4 opções:"
+echo "1- versal: para SoC versal adaptivo"
+echo "2- zynqMP: para Zynq UltraScale+ MPSoC"
+echo "3- zynq: para dispositivos Zynq 7000"
+echo "4- microblaze: para processador MicroBlaze" 
+read -p "Digite um número: " input
+
+while true
+do 
+    if [[ $input == 1 ]]; then
+        plataform="versal"
+        break
+    elif  [[ $input == 2 ]]; then
+        plataform="zynqMP"
+        break
+    elif  [[ $input == 3 ]]; then
+        plataform="zynq"
+        break
+    elif  [[ $input == 4 ]]; then
+        plataform="microblaze"
+        break
+    else      
+        echo "Opção inválida"
+        read -p "Digite um número: " input
+    fi
+done
 
 
+while true
+do
+    read -p "Digite o nome do projeto:" project_name
+    read -p "O nome $project_name está correto? Digite 's' para sim." input
+    if [ $input == "s" ]; then
+        break
+    fi
+done
+
+
+petalinux-create project --template $plataform --name $project_name 
+cd $project_name
+export working_dir=$(pwd)
+stage_over
+echo -e "${BLACK}Etapa 3: Adicinando o arquivo.xsa"
+stage_init
+
+while true
+do
+    echo "Digite o nome do arquivo"
+    echo "Exemplo: /home/ivan/arquivos/peta/"
+    read -p "Nome do arquivo: " arquivo_xsa
+    #set -x
+    #Exemplo Documents/Guia-Petalinux
+    arquivo_xsa="$(find $HOME -type f -name "$arquivo_xsa")"
+    
+    if [ -n "$arquivo_xsa" ]; then
+        echo "Arquivo encontrado"
+        echo $arquivo_xsa
+        read -p "O nome do arquivo está correto? Digite 's' para sim:" input
+        if [ $input == "s" ]; then
+            break
+        fi
+    else
+        echo "Arquivo não encontrado"
+    fi
+    
+done 
+
+petalinux-config --get-hw-description $arquivo_xsa
+
+stage_over
+echo -e "${BLACK}Etapa 4: Fazendo a build"
+stage_init
+petalinux-build
 
