@@ -89,7 +89,7 @@ if [[ $input = "s" ]]; then
 	caminho_do_instalador=${caminhos[$n_arquivo]}
 else 
 	
-    echo "Exemplo de caminho /home/ivandobbin/Aplicativos/petalinux-v2024.1-05202009-installer.run"
+    echo "Exemplo de caminho /home/ivandobbin/Aplicativos/"
     repeat_reading "Digite o caminho do arquivo:"
     $caminho_do_instalador=$caminho
 
