@@ -123,17 +123,16 @@ stage_over
 # ===============================================================================================
 echo -e "${BLACK}Etapa 4: Fazendo a build"
 stage_init
-set -x
-while true
-do    
-    read -p "Deseja iniciar a build? Digite 's' para sim:" input
-    if [ $input == "s" ]; then
-        #echo "$scripts_dir/build_peta_project.sh"
-        "$scripts_dir/build_peta_project.sh"
-    else
-        warning "Para realizar a build sem a criação do projeto\nexecute o script build_peta_project.sh"
-        break
-    fi
-done
+# set -x
+  
+read -p "Deseja iniciar a build? Digite 's' para sim:" input
+if [ $input == "s" ]; then
+    #echo "$scripts_dir/build_peta_project.sh"
+    "$scripts_dir/build_peta_project.sh"
+else
+    warning "Para realizar a build sem a criação do projeto\nexecute o script build_peta_project.sh"
+    break
+fi
 
+important "Build finalizada"
 

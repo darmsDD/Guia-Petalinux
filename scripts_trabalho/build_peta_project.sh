@@ -8,7 +8,7 @@ if [ -z $scripts_dir ]; then
     fi
     source $script_file
 else
-    echo $scripts_dir
+    #echo $scripts_dir
     source "$scripts_dir/my_petalinux_base_functions.sh"
     
 fi

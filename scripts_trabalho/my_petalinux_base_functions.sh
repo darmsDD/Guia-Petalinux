@@ -107,7 +107,7 @@ function lista_projetos() {
         read -p "Digite o número do projetos: " n_arquivo
         while [[ $n_arquivo -ge ${#caminhos[@]} || $n_arquivo -lt 0 ]] || ! [[ $n_arquivo =~ $is_a_number ]]
         do 
-            read -p "Número inválido. Digite o número do projetos: " n_arquivo
+            read -p "Número inválido. Digite o número do projeto: " n_arquivo
         done 
         pasta_projeto=${caminhos[$n_arquivo]}
     fi
