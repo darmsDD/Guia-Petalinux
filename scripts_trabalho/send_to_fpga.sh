@@ -60,6 +60,10 @@ do
         echo "Cartão sd"
         break;
     elif [[ $input == 3 ]]; then
+        ## Está dando esse erro
+        ## /bin/bash: line 1: dtc: command not found
+        ## Fail to convert dtb cmd
+
         echo "petalinux-boot qemu --prebuilt 3"
         petalinux-boot qemu --prebuilt 3
         break;
