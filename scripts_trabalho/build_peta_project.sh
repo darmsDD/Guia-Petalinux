@@ -27,3 +27,23 @@ fi
 
 cd $working_dir
 petalinux-build
+
+#The boot image can be put into Flash or SD card. When you power on the board, it can boot from the boot image. 
+#A boot image usually contains a first stage boot loader image, FPGA bitstream and U-Boot.
+read -p "Aperte qualquer coisa para fazer o boot" input
+echo "petalinux-package boot --u-boot"
+petalinux-package boot --u-boot
+#petalinux-package boot --u-boot --format MCS
+
+#An MCS image for Zynq usually contains a First stage boot loader image (FSBL), 
+#FPGA bitstream, Arm® trusted firmware, U-Boot, DTB, and Kernel Fit image (optional).
+#Execute the following command to generate the MCS image to boot up to U-Boot using build images:
+# petalinux-package boot --u-boot --format MCS
+
+#pre_build image
+echo "Exemplo: /home/ivandobbin/Documents/Petalinux_setup/design_neuronio_axilite_wrapper.bit" 
+repeat_reading "Passe o caminho do arquivo bistream:"
+bit_path=$caminho
+echo "petalinux-package prebuilt --fpga $bit_path"
+cd $working_dir
+petalinux-package prebuilt --fpga $bit_path
