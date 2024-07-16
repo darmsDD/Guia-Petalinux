@@ -27,7 +27,7 @@ red_word () {
 }
 
 black_word () {
-    echo -e ${RED}$1${NC}
+    echo -e ${BLACK}$1${NC}
 }
 
 green_word () {
@@ -35,14 +35,14 @@ green_word () {
 }
 
 check_path(){
-    read -p "$1" caminho 
+    read -e -p "$1" caminho 
     cd $HOME && cd $caminho 2>/dev/null
     while [[ $? != 0 ]]
     do
         error "Caminho inválido."
         warning "Lembre-se que o caminho não inclui o arquivo."
         warning "Exemplo /home/ivandobbin/Documents/Guia-Petalinux/"
-        read -p "$1" caminho 
+        read -e -p "$1" caminho 
         cd $HOME && cd $caminho  2>/dev/null          
     done
     caminho=$(pwd)
@@ -104,7 +104,7 @@ function lista_projetos() {
     echo -e "\nAlguns dos projetos encontrados está correto?"
     read -p "Digite 's' se sim: " input
     if [[ $input = "s" ]]; then
-        read -p "Digite o número do projetos: " n_arquivo
+        read -p "Digite o número do projeto: " n_arquivo
         while [[ $n_arquivo -ge ${#caminhos[@]} || $n_arquivo -lt 0 ]] || ! [[ $n_arquivo =~ $is_a_number ]]
         do 
             read -p "Número inválido. Digite o número do projeto: " n_arquivo
