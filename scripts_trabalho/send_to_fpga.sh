@@ -1,7 +1,8 @@
 #!/bin/bash
 
-
-
+temp_black='\033[1m'
+temp_nc='\033[0m'
+echo -e "${temp_black} Procurando arquivos bases do script ${temp_nc}"
 if [ -z $scripts_dir ]; then
     script_file=$(find $HOME -type f -path "*scripts_trabalho/my_petalinux_base_functions.sh")
     if [ -z $script_file ]; then
@@ -41,25 +42,40 @@ echo -e "${BLACK} Etapa 3: Envia para a fpga"
 stage_init
 
 
-echo "petalinux-boot --qemu/--jtag"
-#The boot image can be put into Flash or SD card. When you power on the board, it can boot from the boot image. 
-#A boot image usually contains a first stage boot loader image, FPGA bitstream and U-Boot.
-read -p "Aperte qualquer coisa para continuar" input
-petalinux-package boot --u-boot
-#petalinux-package boot --u-boot --format MCS
+while true 
+do
+    echo "Escolha uma opção:"
 
-#An MCS image for Zynq usually contains a First stage boot loader image (FSBL), 
-#FPGA bitstream, Arm® trusted firmware, U-Boot, DTB, and Kernel Fit image (optional).
-#Execute the following command to generate the MCS image to boot up to U-Boot using build images:
-# petalinux-package boot --u-boot --format MCS
+    important "1-JTAG"
+    important "2-Cartão SD"
+    important "3-QEMU (Simulação)"
 
-#pre_build image
-read -p "Aperte qualquer coisa para continuar" input
-petalinux-package prebuilt --fpga /home/ivandobbin/Documents/Petalinux_setup/design_neuronio_axilite_wrapper.bit
+    read -p ":" input
 
+    if [[ $input == 1 ]]; then
+        echo "petalinux-boot jtag --prebuilt 3"
+        petalinux-boot jtag --prebuilt 3
+        break;
+    elif [[ $input == 2 ]]; then
+        echo "Cartão sd"
+        break;
+    elif [[ $input == 3 ]]; then
+        echo "petalinux-boot qemu --prebuilt 3"
+        petalinux-boot qemu --prebuilt 3
+        break;
+    else
+        warning "Opção inválida"
+    fi
+done
+
+
+#echo "petalinux-boot --qemu/--jtag"
 #simulado, para sair aperte ctrl A e depois x
-petalinux-boot qemu --prebuilt 3
+#petalinux-boot qemu --prebuilt 3
 #real
 #petalinux-boot jtag --prebuilt 3
 # source "$caminho_pasta_petalinux/settings.sh"
 # failed_command
+
+#petalinux-boot jtag --kernel
+#petalinux-boot jtag --u-boot
