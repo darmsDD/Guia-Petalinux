@@ -30,7 +30,7 @@ Esta macro será utilizada pelos outros scripts.
 
 4. Execute o arquivo create_peta_project.sh para criar o projeto e fazer a build.
 
-    ```./create_peta_project.sh.sh ```
+    ```./create_peta_project.sh ```
 
 5. Caso não execute a build no momento, é possível realizar apenas a etapa de build com o script *build_peta_project.sh*
 
